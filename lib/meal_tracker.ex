@@ -1,18 +1,5 @@
 defmodule MealTracker do
   @moduledoc """
-  Documentation for MealTracker.
+  A command-line meal tracking toolkit.
   """
-
-  @doc """
-  Hello world.
-
-  ## Examples
-
-      iex> MealTracker.hello()
-      :world
-
-  """
-  def hello do
-    :world
-  end
 end
