@@ -6,7 +6,7 @@ defmodule MealTracker.Hooks do
 
     quote do
       def version do
-        unquote(version)
+        unquote(String.trim(version))
       end
     end
   end
