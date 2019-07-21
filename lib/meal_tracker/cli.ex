@@ -3,9 +3,7 @@ defmodule MealTracker.CLI do
   Handles the command-line interface of the meal tracker application.
   """
 
-  alias MealTracker.Commands.{Add, List, Status}
-
-  @version "0.1.0"
+  alias MealTracker.Commands.{Add, List, Status, Version}
 
   def main(argv \\ []) do
     case argv do
@@ -18,7 +16,7 @@ defmodule MealTracker.CLI do
   defp handle_command("help", _options), do: print_help()
   defp handle_command("list", options), do: List.run(options)
   defp handle_command("status", options), do: Status.run(options)
-  defp handle_command("version", _options), do: print_version()
+  defp handle_command("version", options), do: Version.run(options)
 
   defp handle_command(command, _options) do
     IO.puts("Unknown command: #{command}\n\n")
@@ -27,7 +25,7 @@ defmodule MealTracker.CLI do
   end
 
   defp print_help do
-    print_version()
+    Version.run([])
 
     IO.puts("""
 
@@ -39,9 +37,5 @@ defmodule MealTracker.CLI do
     status    Print today's log
     version   Print Meal Tracker version information
     """)
-  end
-
-  defp print_version do
-    IO.puts("Meal Tracker v#{@version}")
   end
 end
