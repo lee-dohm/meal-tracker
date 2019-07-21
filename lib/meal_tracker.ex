@@ -3,7 +3,7 @@ defmodule MealTracker do
   A command-line meal tracking toolkit.
   """
 
-  @version "0.1.0"
+  @version MealTracker.MixProject.project() |> Keyword.fetch!(:version)
 
   def version, do: @version
 
