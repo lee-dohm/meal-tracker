@@ -24,3 +24,4 @@ meal_tracker-*.tar
 
 # Ignore the compiled escript
 /bin/
+/track
