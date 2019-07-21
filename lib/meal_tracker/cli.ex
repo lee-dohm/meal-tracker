@@ -4,7 +4,7 @@ defmodule MealTracker.CLI do
   """
 
   alias MealTracker.{FoodItem, Helper, Log}
-  alias MealTracker.Commands.ListCommand
+  alias MealTracker.Commands.{AddCommand, ListCommand}
 
   @version "0.1.0"
 
@@ -15,16 +15,7 @@ defmodule MealTracker.CLI do
     end
   end
 
-  defp handle_command("add", options) do
-    entry =
-      options
-      |> Enum.join(" ")
-      |> FoodItem.parse()
-
-    read_or_create_today()
-    |> Log.add_entry(entry)
-    |> write_today()
-  end
+  defp handle_command("add", options), do: AddCommand.run(options)
 
   defp handle_command("help", _options), do: print_help()
 
@@ -61,21 +52,5 @@ defmodule MealTracker.CLI do
 
   defp print_version do
     IO.puts("Meal Tracker v#{@version}")
-  end
-
-  defp read_or_create_today do
-    path = Helper.today_path()
-
-    if File.exists?(path) do
-      {:ok, log} = Log.read(path)
-
-      log
-    else
-      Log.new()
-    end
-  end
-
-  defp write_today(log) do
-    Log.write(log, Helper.today_path())
   end
 end
