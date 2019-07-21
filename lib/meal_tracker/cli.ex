@@ -5,6 +5,8 @@ defmodule MealTracker.CLI do
 
   alias MealTracker.{Config, FoodItem, Log}
 
+  @version "0.1.0"
+
   def main(argv \\ []) do
     case argv do
       [] -> print_help()
@@ -25,8 +27,25 @@ defmodule MealTracker.CLI do
 
   defp handle_command("help", _options) do
     IO.puts("""
-    Work in progress
+    Meal Tracker v#{@version}
+
+    These are the common Meal Tracker commands:
+
+    add       Add a log entry
+    list      List the daily logs
+    status    Print today's log
     """)
+  end
+
+  defp handle_command("list", _options) do
+    root = Config.read().root
+
+    files =
+      root
+      |> File.ls!()
+      |> Enum.map(fn file_name -> String.slice(file_name, 0..-4) end)
+
+    IO.puts(files)
   end
 
   defp handle_command("status", _options) do
