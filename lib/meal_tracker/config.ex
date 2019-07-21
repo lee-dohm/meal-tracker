@@ -5,6 +5,9 @@ defmodule MealTracker.Config do
 
   defstruct [:root]
 
+  @doc """
+  Reads the configuration from `~/.meal-tracker`.
+  """
   def read do
     lines =
       config_path()
