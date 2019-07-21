@@ -8,7 +8,8 @@ defmodule MealTracker.MixProject do
       elixir: "~> 1.9",
       start_permanent: Mix.env() == :prod,
       deps: deps(),
-      docs: docs()
+      docs: docs(),
+      escript: escript()
     ]
   end
 
@@ -29,6 +30,14 @@ defmodule MealTracker.MixProject do
     [
       main: "readme",
       extras: ["README.md", "LICENSE.md"]
+    ]
+  end
+
+  defp escript do
+    [
+      main_module: MealTracker.CLI,
+      name: "track",
+      path: "bin/track"
     ]
   end
 end
