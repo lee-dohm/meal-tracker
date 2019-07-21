@@ -3,9 +3,9 @@ defmodule MealTracker do
   A command-line meal tracking toolkit.
   """
 
-  @version MealTracker.MixProject.project() |> Keyword.fetch!(:version)
+  require MealTracker.Hooks
 
-  def version, do: @version
+  @before_compile {MealTracker.Hooks, :inject_version}
 
-  def version_text, do: "Meal Tracker v#{@version}"
+  def version_text, do: "Meal Tracker #{version()}"
 end
