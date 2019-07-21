@@ -17,6 +17,20 @@ defmodule MealTracker.Config do
     read_lines(%__MODULE__{}, lines)
   end
 
+  def root do
+    read()
+    |> root()
+  end
+
+  @doc """
+  Gets the `root` value from the given `config`.
+  """
+  def root(%__MODULE__{} = config) do
+    config
+    |> Map.get(:root)
+    |> Path.expand()
+  end
+
   defp config_path do
     "~/.meal-tracker"
     |> Path.expand()

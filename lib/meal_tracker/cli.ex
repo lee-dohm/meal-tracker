@@ -3,7 +3,8 @@ defmodule MealTracker.CLI do
   Handles the command-line interface of the meal tracker application.
   """
 
-  alias MealTracker.{Config, FoodItem, Log}
+  alias MealTracker.{FoodItem, Helper, Log}
+  alias MealTracker.Commands.ListCommand
 
   @version "0.1.0"
 
@@ -27,19 +28,10 @@ defmodule MealTracker.CLI do
 
   defp handle_command("help", _options), do: print_help()
 
-  defp handle_command("list", _options) do
-    root = Config.read().root
-
-    files =
-      root
-      |> File.ls!()
-      |> Enum.map(fn file_name -> String.slice(file_name, 0..-4) end)
-
-    IO.puts(files)
-  end
+  defp handle_command("list", options), do: ListCommand.run(options)
 
   defp handle_command("status", _options) do
-    text = File.read!(today_path())
+    text = File.read!(Helper.today_path())
 
     IO.puts(text)
   end
@@ -50,12 +42,6 @@ defmodule MealTracker.CLI do
     IO.puts("Unknown command: #{command}\n\n")
 
     print_help()
-  end
-
-  defp meal_tracker_path do
-    config = Config.read()
-
-    Path.expand(config.root)
   end
 
   defp print_help do
@@ -78,7 +64,7 @@ defmodule MealTracker.CLI do
   end
 
   defp read_or_create_today do
-    path = today_path()
+    path = Helper.today_path()
 
     if File.exists?(path) do
       {:ok, log} = Log.read(path)
@@ -89,13 +75,7 @@ defmodule MealTracker.CLI do
     end
   end
 
-  defp today_path do
-    today = NaiveDateTime.utc_now() |> NaiveDateTime.to_date()
-
-    Path.join(meal_tracker_path(), "#{Date.to_iso8601(today)}.md")
-  end
-
   defp write_today(log) do
-    Log.write(log, today_path())
+    Log.write(log, Helper.today_path())
   end
 end
