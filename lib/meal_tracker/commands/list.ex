@@ -1,4 +1,4 @@
-defmodule MealTracker.Commands.ListCommand do
+defmodule MealTracker.Commands.List do
   @moduledoc """
   Handles the `track list` command.
   """

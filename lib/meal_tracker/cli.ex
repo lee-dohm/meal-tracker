@@ -3,7 +3,7 @@ defmodule MealTracker.CLI do
   Handles the command-line interface of the meal tracker application.
   """
 
-  alias MealTracker.Commands.{AddCommand, ListCommand, StatusCommand}
+  alias MealTracker.Commands.{Add, List, Status}
 
   @version "0.1.0"
 
@@ -14,10 +14,10 @@ defmodule MealTracker.CLI do
     end
   end
 
-  defp handle_command("add", options), do: AddCommand.run(options)
+  defp handle_command("add", options), do: Add.run(options)
   defp handle_command("help", _options), do: print_help()
-  defp handle_command("list", options), do: ListCommand.run(options)
-  defp handle_command("status", options), do: StatusCommand.run(options)
+  defp handle_command("list", options), do: List.run(options)
+  defp handle_command("status", options), do: Status.run(options)
   defp handle_command("version", _options), do: print_version()
 
   defp handle_command(command, _options) do

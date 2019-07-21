@@ -1,4 +1,4 @@
-defmodule MealTracker.Commands.StatusCommand do
+defmodule MealTracker.Commands.Status do
   alias MealTracker.Helper
 
   def run(_options) do

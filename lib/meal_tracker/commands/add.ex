@@ -1,4 +1,4 @@
-defmodule MealTracker.Commands.AddCommand do
+defmodule MealTracker.Commands.Add do
   alias MealTracker.{FoodItem, Helper, Log}
 
   def run(options) do
