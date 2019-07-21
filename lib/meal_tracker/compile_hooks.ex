@@ -1,4 +1,4 @@
-defmodule MealTracker.Hooks do
+defmodule MealTracker.CompileHooks do
   @moduledoc """
   Compile-time hooks for the application.
   """

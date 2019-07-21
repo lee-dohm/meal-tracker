@@ -3,9 +3,9 @@ defmodule MealTracker do
   A command-line meal tracking toolkit.
   """
 
-  require MealTracker.Hooks
+  require MealTracker.CompileHooks
 
-  @before_compile {MealTracker.Hooks, :inject_version}
+  @before_compile {MealTracker.CompileHooks, :inject_version}
 
   @doc """
   Returns the full version text for the application.
