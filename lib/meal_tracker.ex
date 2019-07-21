@@ -7,5 +7,8 @@ defmodule MealTracker do
 
   @before_compile {MealTracker.Hooks, :inject_version}
 
+  @doc """
+  Returns the full version text for the application.
+  """
   def version_text, do: "Meal Tracker #{version()}"
 end
