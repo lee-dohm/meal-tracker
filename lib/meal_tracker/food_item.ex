@@ -6,8 +6,8 @@ defmodule MealTracker.FoodItem do
 
   This module exists to translate food items between the structure representation and textual
   representations. In the patterns below "Food name" represents the name of the food, "nx"
-  represents the number (n) of items of that food, and "n unit" represents the number (n) of unit of
-  the food such as "355 milliliter Pepsi".
+  represents the number `n` of items of that food, and "n unit" represents the number `n` of the
+  given `unit` of the food such as "355 milliliter Pepsi".
 
   * `Food name` (equivalent to `1x Food name`)
   * `nx Food name`
