@@ -1,4 +1,8 @@
 defmodule MealTracker.Commands.Add do
+  @moduledoc """
+  Handles the `track add` command.
+  """
+
   alias MealTracker.{FoodItem, Helper, Log}
 
   def run(options) do

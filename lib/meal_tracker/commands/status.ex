@@ -1,4 +1,8 @@
 defmodule MealTracker.Commands.Status do
+  @moduledoc """
+  Handles the `track status` command.
+  """
+
   alias MealTracker.Helper
 
   def run(_options) do

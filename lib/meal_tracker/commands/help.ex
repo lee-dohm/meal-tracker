@@ -1,4 +1,8 @@
 defmodule MealTracker.Commands.Help do
+  @moduledoc """
+  Handles the `track help` command.
+  """
+
   def run(_options) do
     IO.puts("""
     #{MealTracker.version_text()}
