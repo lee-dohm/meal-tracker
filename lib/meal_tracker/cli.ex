@@ -17,8 +17,7 @@ defmodule MealTracker.CLI do
   end
 
   defp handle_command("status", _options) do
-    today = NaiveDateTime.utc_now() |> NaiveDateTime.to_date()
-    text = File.read!(Path.join(meal_tracker_path(), "#{Date.to_iso8601(today)}.md"))
+    text = File.read!(today_path())
 
     IO.puts(text)
   end
@@ -37,5 +36,11 @@ defmodule MealTracker.CLI do
 
   defp print_help do
     handle_command("help", [])
+  end
+
+  defp today_path do
+    today = NaiveDateTime.utc_now() |> NaiveDateTime.to_date()
+
+    Path.join(meal_tracker_path(), "#{Date.to_iso8601(today)}.md")
   end
 end
