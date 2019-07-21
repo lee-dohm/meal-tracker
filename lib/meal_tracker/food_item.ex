@@ -17,6 +17,7 @@ defmodule MealTracker.FoodItem do
   defstruct [:name, quantity: 1, unit: :item]
 
   @item_quantity_pattern ~r/^(?<quantity>\d+(\.\d+)?)x (?<name>.+)$/
+  @unit_quantity_pattern ~r/^(?<quantity>\d+(\.\d+)?) (?<unit>\w+) (of )?(?<name>.+)$/
 
   @doc """
   Parses a food item entry into the `MealTracker.FoodItem` struct.
@@ -24,6 +25,8 @@ defmodule MealTracker.FoodItem do
   def parse(text) do
     cond do
       captures = Regex.named_captures(@item_quantity_pattern, text) -> parse_item_quantity(captures)
+      captures = Regex.named_captures(@unit_quantity_pattern, text) -> parse_unit_quantity(captures)
+      true -> %__MODULE__{name: text, quantity: 1, unit: :item}
     end
   end
 
@@ -37,4 +40,19 @@ defmodule MealTracker.FoodItem do
   end
 
   defp parse_number(text), do: parse_integer(Integer.parse(text), text)
+
+  defp parse_unit_quantity(captures) do
+    %__MODULE__{
+      name: captures["name"],
+      quantity: parse_number(captures["quantity"]),
+      unit: captures["unit"] |> stem() |> String.to_atom()
+    }
+  end
+
+  defp stem(unit) do
+    cond do
+      String.ends_with?(unit, "s") -> String.slice(unit, 0..-2)
+      true -> unit
+    end
+  end
 end
