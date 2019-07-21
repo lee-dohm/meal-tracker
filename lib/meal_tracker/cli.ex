@@ -3,6 +3,8 @@ defmodule MealTracker.CLI do
   Handles the command-line interface of the meal tracker application.
   """
 
+  alias MealTracker.Config
+
   def main(argv \\ []) do
     case argv do
       [] -> print_help()
@@ -29,9 +31,9 @@ defmodule MealTracker.CLI do
   end
 
   defp meal_tracker_path do
-    "MEAL_TRACKER"
-    |> System.get_env()
-    |> Path.expand()
+    config = Config.read()
+
+    config.root
   end
 
   defp print_help do
