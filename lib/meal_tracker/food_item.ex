@@ -30,6 +30,12 @@ defmodule MealTracker.FoodItem do
     end
   end
 
+  @doc """
+  Converts a food item to its string representation.
+  """
+  def to_string(%__MODULE__{quantity: n, unit: :item, name: name}), do: "#{n}x #{name}"
+  def to_string(%__MODULE__{quantity: n, unit: unit, name: name}), do: "#{n} #{unit} #{name}"
+
   defp parse_float({quantity, ""}, _), do: quantity
 
   defp parse_integer({quantity, ""}, _), do: quantity
