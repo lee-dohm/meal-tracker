@@ -25,17 +25,7 @@ defmodule MealTracker.CLI do
     |> write_today()
   end
 
-  defp handle_command("help", _options) do
-    IO.puts("""
-    Meal Tracker v#{@version}
-
-    These are the common Meal Tracker commands:
-
-    add       Add a log entry
-    list      List the daily logs
-    status    Print today's log
-    """)
-  end
+  defp handle_command("help", _options), do: print_help()
 
   defp handle_command("list", _options) do
     root = Config.read().root
@@ -54,6 +44,8 @@ defmodule MealTracker.CLI do
     IO.puts(text)
   end
 
+  defp handle_command("version", _options), do: print_version()
+
   defp handle_command(command, _options) do
     IO.puts("Unknown command: #{command}\n\n")
 
@@ -67,7 +59,22 @@ defmodule MealTracker.CLI do
   end
 
   defp print_help do
-    handle_command("help", [])
+    print_version()
+
+    IO.puts("""
+
+    These are the common Meal Tracker commands:
+
+    add       Add a log entry
+    help      Print this help information
+    list      List the daily logs
+    status    Print today's log
+    version   Print Meal Tracker version information
+    """)
+  end
+
+  defp print_version do
+    IO.puts("Meal Tracker v#{@version}")
   end
 
   defp read_or_create_today do
