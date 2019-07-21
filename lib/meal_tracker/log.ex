@@ -1,6 +1,29 @@
 defmodule MealTracker.Log do
   @moduledoc """
-  Represents a daily log.
+  Represents a daily meal log.
+
+  A log consists of the date and a list of entries.
+
+  ## File format
+
+  The data is stored in Markdown format. This makes the data easy for the program to parse but also
+  for a human to read.
+
+  The file format is:
+
+  * A level 1 header containing the date in ISO 8601 format
+  * A blank line
+  * An unordered list of `MealTracker.FoodItem` entries in text form
+
+  ## Examples
+
+  ```markdown
+  # 2019-07-21
+
+  * Apple
+  * Beer
+  * Cracker
+  ```
   """
 
   alias MealTracker.FoodItem
