@@ -3,7 +3,7 @@ defmodule MealTracker.Config do
   Represents the configuration of the meal tracker application.
   """
 
-  defstruct [:root]
+  defstruct root: "~/meal-tracker"
 
   @doc """
   Reads the configuration from `~/.meal-tracker`.
@@ -22,7 +22,7 @@ defmodule MealTracker.Config do
     |> Path.expand()
   end
 
-  defp read_line(struct, "root: " <> path), do: %__MODULE__{struct | root: Path.expand(path)}
+  defp read_line(struct, "root: " <> path), do: %__MODULE__{struct | root: path}
 
   defp read_line(struct, _line), do: struct
 

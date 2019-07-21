@@ -55,7 +55,7 @@ defmodule MealTracker.CLI do
   defp meal_tracker_path do
     config = Config.read()
 
-    config.root
+    Path.expand(config.root)
   end
 
   defp print_help do

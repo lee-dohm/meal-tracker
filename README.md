@@ -14,10 +14,12 @@ Research shows that meal tracking is the absolute best thing you can do to lose 
 
 ## Use
 
+### Adding an item to your daily log
+
 Once the tool is built and placed somewhere on your `PATH`, execute the following to add a single item to your log:
 
 ```
-track [food]
+track add [food]
 ```
 
 Where `food` follows one of the following patterns:
@@ -26,11 +28,35 @@ Where `food` follows one of the following patterns:
 * `3x Apple`
 * `355 milliliter Pepsi`
 
-The new food item will be added to your log at `$MEAL_TRACKER/[date].md`. Your log will look something like this:
+The new food item will be added to your log at `~/meal-tracker/[date].md`. Your log will look something like this:
 
 ```markdown
+# 2019-07-21
+
 * 10 ounce Rib Eye Steak
 ```
+
+### Printing today's information
+
+Print today's log with:
+
+```
+track status
+```
+
+### Other commands
+
+You can get the list of common commands with:
+
+```
+track help
+```
+
+## Configuration
+
+Configuration of the Meal Tracker app is stored in `~/.meal-tracker`. The following values are supported:
+
+* `root` The directory where the Meal Tracker data will be stored, _default:_ `~/meal-tracker`
 
 ## Common Tasks
 
