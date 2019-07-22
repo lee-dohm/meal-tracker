@@ -1,6 +1,16 @@
 defmodule MealTracker.Commands.Add do
   @moduledoc """
-  Handles the `track add` command.
+  Adds an entry to a daily food log.
+
+  ```
+  track add [options] ENTRY
+  ```
+
+  By default, it adds the entry to the food log for the current date.
+
+  ## Command-line options
+
+  * `--for DATE` - Allows adding the entry to the food log for a given date
   """
 
   alias MealTracker.{FoodItem, Helper, Log}
