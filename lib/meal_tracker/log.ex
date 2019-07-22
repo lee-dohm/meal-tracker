@@ -33,8 +33,8 @@ defmodule MealTracker.Log do
   @doc """
   Creates an empty log with today's date.
   """
-  def new do
-    %__MODULE__{date: Helper.today()}
+  def new(date \\ Helper.today()) do
+    %__MODULE__{date: date}
   end
 
   @doc """

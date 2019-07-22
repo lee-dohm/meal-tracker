@@ -11,10 +11,17 @@ defmodule MealTracker.LogTest do
   end
 
   describe "new" do
-    test "creates an empty log with today's date" do
+    test "creates an empty log with today's date when given no parameters" do
       log = Log.new()
 
       assert log.date == Helper.today()
+      assert log.entries == []
+    end
+
+    test "creates an empty log for the given date when given a date" do
+      log = Log.new(~D[2019-01-01])
+
+      assert log.date == ~D[2019-01-01]
       assert log.entries == []
     end
   end
