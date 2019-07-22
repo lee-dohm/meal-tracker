@@ -48,12 +48,10 @@ defmodule MealTracker.Log do
   Reads a log from the given `path`.
   """
   def read(path) do
-    lines =
-      path
-      |> File.read!()
-      |> String.split("\n")
-
-    {:ok, parse_lines(%__MODULE__{}, lines)}
+    with {:ok, text} <- File.read(path),
+         lines = String.split(text, "\n") do
+      {:ok, parse_lines(%__MODULE__{}, lines)}
+    end
   end
 
   @doc """
