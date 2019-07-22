@@ -12,6 +12,21 @@ Research shows that meal tracking is the absolute best thing you can do to lose 
 >
 > *-- Jack Hollis, PhD, lead author of the study*
 
+## Installation
+
+If you already have [Elixir][elixir-lang] installed, the current released version can be installed locally without cloning the repository using:
+
+<!--
+The version number in this block should be automatically updated by script/bump.
+-->
+```shell
+mix escript.install github lee-dohm/meal-tracker v0.1.2
+```
+
+If you want the latest development version, leave off the version tag.
+
+[elixir-lang]: https://elixir-lang.org
+
 ## Use
 
 ### Adding an item to your daily log
