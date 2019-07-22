@@ -1,34 +1,61 @@
 defmodule MealTracker.Commands.Add do
   @moduledoc """
-  Handles the `track add` command.
+  Adds an entry to a daily food log.
+
+  ```
+  track add [options] ENTRY
+  ```
+
+  By default, it adds the entry to the food log for the current date.
+
+  ## Command-line options
+
+  * `--for DATE` - Allows adding the entry to the food log for a given date
   """
 
   alias MealTracker.{FoodItem, Helper, Log}
 
-  def run(options) do
+  import MealTracker.PathUtils
+
+  def run(args) do
+    args
+    |> parse_args()
+    |> read_or_create_log()
+    |> add_entry()
+    |> write_log()
+  end
+
+  defp add_entry({log, {_, rest, _} = options}) do
     entry =
-      options
+      rest
       |> Enum.join(" ")
       |> FoodItem.parse()
 
-    read_or_create_today()
-    |> Log.add_entry(entry)
-    |> write_today()
+    {Log.add_entry(log, entry), options}
   end
 
-  defp read_or_create_today do
-    path = Helper.today_path()
+  defp parse_args(args) do
+    options = OptionParser.parse(args, strict: [for: :string])
+
+    {nil, options}
+  end
+
+  defp read_or_create_log({_, {opts, _, _} = options}) do
+    date = Keyword.get(opts, :for, Helper.today())
+    path = log_path(date)
 
     if File.exists?(path) do
       {:ok, log} = Log.read(path)
 
-      log
+      {log, options}
     else
-      Log.new()
+      {Log.new(date), options}
     end
   end
 
-  defp write_today(log) do
-    Log.write(log, Helper.today_path())
+  defp write_log({log, {opts, _, _}}) do
+    date = Keyword.get(opts, :for, Helper.today())
+
+    Log.write(log, log_path(date))
   end
 end
