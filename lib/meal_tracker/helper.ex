@@ -1,9 +1,13 @@
 defmodule MealTracker.Helper do
   alias MealTracker.Config
 
-  def today_path do
-    today = NaiveDateTime.utc_now() |> NaiveDateTime.to_date()
+  def today do
+    :calendar.local_time()
+    |> NaiveDateTime.from_erl!()
+    |> NaiveDateTime.to_date()
+  end
 
-    Path.join(Config.root(), "#{Date.to_iso8601(today)}.md")
+  def today_path do
+    Path.join(Config.root(), "#{Date.to_iso8601(today())}.md")
   end
 end
