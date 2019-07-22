@@ -13,6 +13,8 @@ defmodule MealTracker.Commands.List do
       Config.root()
       |> File.ls!()
       |> Enum.map(fn file_name -> String.slice(file_name, 0..-4) end)
+      |> Enum.reverse()
+      |> Enum.join("\n")
 
     IO.puts(files)
   end
