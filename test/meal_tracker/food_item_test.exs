@@ -43,6 +43,14 @@ defmodule MealTracker.FoodItemTest do
       assert item.quantity == 355
       assert item.unit == :milliliter
     end
+
+    test "accepts an array of strings by joining them with spaces" do
+      item = FoodItem.parse(~W[355 milliliters of Pepsi])
+
+      assert item.name == "Pepsi"
+      assert item.quantity == 355
+      assert item.unit == :milliliter
+    end
   end
 
   describe "to_string/1" do

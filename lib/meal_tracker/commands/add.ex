@@ -26,12 +26,7 @@ defmodule MealTracker.Commands.Add do
   end
 
   defp add_entry({log, {_, rest, _} = options}) do
-    entry =
-      rest
-      |> Enum.join(" ")
-      |> FoodItem.parse()
-
-    {Log.add_entry(log, entry), options}
+    {Log.add_entry(log, FoodItem.parse(rest)), options}
   end
 
   defp parse_args(args) do
