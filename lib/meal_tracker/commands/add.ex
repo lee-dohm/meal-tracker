@@ -17,6 +17,7 @@ defmodule MealTracker.Commands.Add do
 
   import MealTracker.PathUtils
 
+  @doc false
   def run(args) do
     args
     |> parse_args()
@@ -26,12 +27,7 @@ defmodule MealTracker.Commands.Add do
   end
 
   defp add_entry({log, {_, rest, _} = options}) do
-    entry =
-      rest
-      |> Enum.join(" ")
-      |> FoodItem.parse()
-
-    {Log.add_entry(log, entry), options}
+    {Log.add_entry(log, FoodItem.parse(rest)), options}
   end
 
   defp parse_args(args) do
@@ -44,12 +40,9 @@ defmodule MealTracker.Commands.Add do
     date = Keyword.get(opts, :for, Helper.today())
     path = log_path(date)
 
-    if File.exists?(path) do
-      {:ok, log} = Log.read(path)
-
-      {log, options}
-    else
-      {Log.new(date), options}
+    case Log.read(path) do
+      {:error, :enoent} -> {Log.new(date), options}
+      {:ok, log} -> {log, options}
     end
   end
 

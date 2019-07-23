@@ -86,6 +86,10 @@ defmodule MealTracker.LogTest do
                FoodItem.parse("Apple")
              ]
     end
+
+    test "returns an error when file doesn't exist", context do
+      assert {:error, :enoent} = Log.read(context.path)
+    end
   end
 
   describe "write" do
