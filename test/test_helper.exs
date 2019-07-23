@@ -15,3 +15,9 @@ defmodule Support.TempUtils do
     Path.join(dir, filename)
   end
 end
+
+defmodule MealTracker.Commands.ReturnNil do
+  def run(_) do
+    nil
+  end
+end

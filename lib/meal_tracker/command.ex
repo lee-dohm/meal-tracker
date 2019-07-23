@@ -38,6 +38,18 @@ defmodule MealTracker.Command do
   def supported_attributes, do: [:shortdoc]
 
   @doc """
+  Returns `true` if the given module is a command.
+  """
+  def command?(module) do
+    match?('Elixir.MealTracker.Commands.' ++ _, Atom.to_charlist(module)) and
+      ensure_command?(module)
+  end
+
+  defp ensure_command?(module) do
+    Code.ensure_loaded?(module) and function_exported?(module, :run, 1)
+  end
+
+  @doc """
   Converts a command name to the matching module name.
   """
   def command_to_module_name(command) do

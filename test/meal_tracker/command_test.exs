@@ -26,4 +26,14 @@ defmodule MealTracker.CommandTest do
       assert Command.command_to_module_name("foo-bar") == "FooBar"
     end
   end
+
+  describe "command?" do
+    test "returns true when the module is a command" do
+      assert Command.command?(MealTracker.Commands.ReturnNil)
+    end
+
+    test "returns false when the module is not a command" do
+      refute Command.command?(Map)
+    end
+  end
 end
