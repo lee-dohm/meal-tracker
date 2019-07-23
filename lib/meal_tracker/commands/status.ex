@@ -3,10 +3,14 @@ defmodule MealTracker.Commands.Status do
   Handles the `track status` command.
   """
 
-  alias MealTracker.Helper
+  import MealTracker.DateUtils
+  import MealTracker.PathUtils
 
   def run(_options) do
-    text = File.read!(Helper.today_path())
+    text =
+      today()
+      |> log_path()
+      |> File.read!()
 
     IO.puts(text)
   end

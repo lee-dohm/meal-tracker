@@ -24,16 +24,16 @@ defmodule MealTracker.PathUtils do
   "/Users/username/meal-tracker/2019-07-21.md"
   ```
   """
-  @spec log_path(Date.t() | String.t()) :: Path.t()
-  def log_path(date, config_path \\ "~/.meal-tracker")
+  @spec log_path(Date.t() | String.t(), Config.t()) :: Path.t()
+  def log_path(date, config \\ Config.read())
 
-  def log_path(text, config_path) when is_binary(text) do
+  def log_path(text, config) when is_binary(text) do
     with {:ok, date} <- Date.from_iso8601(text) do
-      log_path(date, config_path)
+      log_path(date, config)
     end
   end
 
-  def log_path(%Date{} = date, config_path) do
-    Path.join(Config.root(config_path), Date.to_iso8601(date) <> ".md")
+  def log_path(%Date{} = date, config) do
+    Path.join(Config.root(config), Date.to_iso8601(date) <> ".md")
   end
 end
