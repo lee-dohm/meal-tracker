@@ -8,23 +8,27 @@ defmodule MealTracker.Config do
   @doc """
   Reads the configuration from `~/.meal-tracker`.
   """
-  def read do
+  def read, do: read(config_path())
+
+  @doc false
+  def read(path) do
     lines =
-      config_path()
+      path
       |> safe_read()
       |> String.split("\n")
 
     read_lines(%__MODULE__{}, lines)
   end
 
+  @doc """
+  Gets the directory in which to store all of the application's data.
+  """
   def root do
     read()
     |> root()
   end
 
-  @doc """
-  Gets the `root` value from the given `config`.
-  """
+  @doc false
   def root(%__MODULE__{} = config) do
     config
     |> Map.get(:root)
@@ -36,7 +40,7 @@ defmodule MealTracker.Config do
     |> Path.expand()
   end
 
-  defp read_line(struct, "root: " <> path), do: %__MODULE__{struct | root: path}
+  defp read_line(struct, "root:" <> path), do: %__MODULE__{struct | root: String.trim(path)}
 
   defp read_line(struct, _line), do: struct
 

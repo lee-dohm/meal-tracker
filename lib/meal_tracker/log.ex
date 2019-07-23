@@ -26,14 +26,16 @@ defmodule MealTracker.Log do
   ```
   """
 
-  alias MealTracker.{FoodItem, Helper}
+  alias MealTracker.FoodItem
+
+  import MealTracker.DateUtils
 
   defstruct [:date, entries: []]
 
   @doc """
   Creates an empty log with today's date.
   """
-  def new(date \\ Helper.today()) do
+  def new(date \\ today()) do
     %__MODULE__{date: date}
   end
 

@@ -1,20 +1,15 @@
 defmodule MealTracker.LogTest do
   use ExUnit.Case
 
-  alias MealTracker.{FoodItem, Helper, Log}
+  alias MealTracker.{DateUtils, FoodItem, Log}
 
-  def temp_path do
-    dir = System.tmp_dir!()
-    filename = "#{System.unique_integer([:positive])}.md"
-
-    Path.join(dir, filename)
-  end
+  import Support.TempUtils
 
   describe "new" do
     test "creates an empty log with today's date when given no parameters" do
       log = Log.new()
 
-      assert log.date == Helper.today()
+      assert log.date == DateUtils.today()
       assert log.entries == []
     end
 
@@ -34,7 +29,7 @@ defmodule MealTracker.LogTest do
         Log.new()
         |> Log.add_entry(entry)
 
-      assert log.date == Helper.today()
+      assert log.date == DateUtils.today()
       assert log.entries == [entry]
     end
   end
@@ -116,7 +111,7 @@ defmodule MealTracker.LogTest do
 
       assert File.read!(context.path) ==
                """
-               # #{Date.to_iso8601(Helper.today())}
+               # #{Date.to_iso8601(DateUtils.today())}
 
                * 1x Apple
                """
@@ -133,7 +128,7 @@ defmodule MealTracker.LogTest do
 
       assert File.read!(context.path) ==
                """
-               # #{Date.to_iso8601(Helper.today())}
+               # #{Date.to_iso8601(DateUtils.today())}
 
                * 1x Apple
                * 1x Beer

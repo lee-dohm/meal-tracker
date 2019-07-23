@@ -13,8 +13,9 @@ defmodule MealTracker.Commands.Add do
   * `--for DATE` - Allows adding the entry to the food log for a given date
   """
 
-  alias MealTracker.{FoodItem, Helper, Log}
+  alias MealTracker.{FoodItem, Log}
 
+  import MealTracker.DateUtils
   import MealTracker.PathUtils
 
   @doc false
@@ -37,7 +38,7 @@ defmodule MealTracker.Commands.Add do
   end
 
   defp read_or_create_log({_, {opts, _, _} = options}) do
-    date = Keyword.get(opts, :for, Helper.today())
+    date = Keyword.get(opts, :for, today())
     path = log_path(date)
 
     case Log.read(path) do
@@ -47,7 +48,7 @@ defmodule MealTracker.Commands.Add do
   end
 
   defp write_log({log, {opts, _, _}}) do
-    date = Keyword.get(opts, :for, Helper.today())
+    date = Keyword.get(opts, :for, today())
 
     Log.write(log, log_path(date))
   end
