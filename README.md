@@ -63,7 +63,7 @@ track status
 
 ### Other commands
 
-You can get the list of common commands with:
+You can get the list of commands with:
 
 ```
 track help
