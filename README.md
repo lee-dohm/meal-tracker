@@ -1,5 +1,7 @@
 # Meal Tracker
 
+[![Build Status](https://travis-ci.com/lee-dohm/meal-tracker.svg?branch=master)](https://travis-ci.com/lee-dohm/meal-tracker)
+
 A command-line tool for doing meal tracking.
 
 Research shows that meal tracking is the absolute best thing you can do to lose weight. [A 2008 study][meal-tracking-study] showed that the simple act of recording what you eat helps keep one mindful of your eating habits, making changing them easier:
