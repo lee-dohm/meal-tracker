@@ -3,12 +3,7 @@ defmodule MealTracker.LogTest do
 
   alias MealTracker.{FoodItem, Helper, Log}
 
-  def temp_path do
-    dir = System.tmp_dir!()
-    filename = "#{System.unique_integer([:positive])}.md"
-
-    Path.join(dir, filename)
-  end
+  import Support.TempUtils
 
   describe "new" do
     test "creates an empty log with today's date when given no parameters" do

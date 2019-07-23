@@ -6,6 +6,7 @@ defmodule MealTracker.MixProject do
       app: :meal_tracker,
       version: "0.1.2",
       elixir: "~> 1.9",
+      elixirc_paths: elixirc_paths(Mix.env()),
       start_permanent: Mix.env() == :prod,
       aliases: aliases(),
       deps: deps(),
@@ -41,6 +42,9 @@ defmodule MealTracker.MixProject do
       extras: ["README.md", "LICENSE.md"]
     ]
   end
+
+  defp elixirc_paths(:test), do: ["lib", "test/support"]
+  defp elixirc_paths(_), do: ["lib"]
 
   defp escript do
     [
