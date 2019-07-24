@@ -1,6 +1,6 @@
 defmodule MealTracker.Commands.Add do
   @moduledoc """
-  Adds an entry to a daily food log.
+  Add an entry to a daily food log.
 
   ```
   track add [options] ENTRY

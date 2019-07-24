@@ -65,6 +65,9 @@ defmodule MealTracker.Command do
     |> Macro.camelize()
   end
 
+  @doc """
+  Load all command modules.
+  """
   def load_all() do
     {:ok, mods} = :application.get_key(:meal_tracker, :modules)
 
@@ -91,6 +94,9 @@ defmodule MealTracker.Command do
     |> Enum.map_join(".", &dasherize/1)
   end
 
+  @doc """
+  Retrieves the contents of the `shortdoc` attribute from the `module`.
+  """
   def shortdoc(module) do
     case List.keyfind(module.__info__(:attributes), :shortdoc, 0) do
       {:shortdoc, [shortdoc]} -> shortdoc

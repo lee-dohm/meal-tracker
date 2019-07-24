@@ -1,6 +1,10 @@
 defmodule MealTracker.Commands.Help do
   @moduledoc """
-  Handles the `track help` command.
+  Displays delp for the application or a command.
+
+  ```
+  track help [COMMAND]
+  ```
   """
 
   use MealTracker.Command
@@ -9,6 +13,7 @@ defmodule MealTracker.Commands.Help do
 
   @shortdoc "Prints help information for commands"
 
+  @doc false
   def run(_options) do
     IO.puts("""
     #{MealTracker.version_text()}
@@ -19,7 +24,7 @@ defmodule MealTracker.Commands.Help do
     """)
   end
 
-  def command_list do
+  defp command_list do
     Command.load_all()
 
     for module <- Command.all_modules(),
@@ -27,7 +32,7 @@ defmodule MealTracker.Commands.Help do
         do: row
   end
 
-  def command_table do
+  defp command_table do
     list =
       command_list()
       |> Enum.reject(fn {_, doc} -> is_nil(doc) end)
