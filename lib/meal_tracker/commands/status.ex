@@ -3,8 +3,9 @@ defmodule MealTracker.Commands.Status do
   Handles the `track status` command.
   """
 
-  import MealTracker.DateUtils
-  import MealTracker.PathUtils
+  use MealTracker.Command
+
+  @shortdoc "Display the daily meal log"
 
   def run(_options) do
     text =

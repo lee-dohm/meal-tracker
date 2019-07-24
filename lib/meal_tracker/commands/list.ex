@@ -3,7 +3,11 @@ defmodule MealTracker.Commands.List do
   Handles the `track list` command.
   """
 
+  use MealTracker.Command
+
   alias MealTracker.Config
+
+  @shortdoc "List the daily meal logs"
 
   @doc """
   Executes the command.

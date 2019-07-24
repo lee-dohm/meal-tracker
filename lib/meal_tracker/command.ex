@@ -38,10 +38,17 @@ defmodule MealTracker.Command do
   def supported_attributes, do: [:shortdoc]
 
   @doc """
+  Returns all loaded command modules.
+  """
+  def all_modules() do
+    for {module, _} <- :code.all_loaded(), command?(module), do: module
+  end
+
+  @doc """
   Returns `true` if the given module is a command.
   """
   def command?(module) do
-    match?('Elixir.MealTracker.Commands.' ++ _, Atom.to_charlist(module)) and
+    match?('Elixir.MealTracker.' ++ _, Atom.to_charlist(module)) and
       ensure_command?(module)
   end
 
@@ -58,6 +65,16 @@ defmodule MealTracker.Command do
     |> Macro.camelize()
   end
 
+  def load_all() do
+    {:ok, mods} = :application.get_key(:meal_tracker, :modules)
+
+    mods
+    |> Enum.filter(fn mod ->
+      String.starts_with?(Atom.to_string(mod), "Elixir.MealTracker.Commands")
+    end)
+    |> Enum.each(&ensure_command?/1)
+  end
+
   @doc """
   Converts a module name into the matching command name.
   """
@@ -72,6 +89,13 @@ defmodule MealTracker.Command do
     |> String.split(".")
     |> Enum.drop(nesting)
     |> Enum.map_join(".", &dasherize/1)
+  end
+
+  def shortdoc(module) do
+    case List.keyfind(module.__info__(:attributes), :shortdoc, 0) do
+      {:shortdoc, [shortdoc]} -> shortdoc
+      _ -> nil
+    end
   end
 
   defp dasherize(<<h, t::binary>>) do
