@@ -11,6 +11,8 @@ defmodule MealTracker.Commands.Add do
   ## Command-line options
 
   * `--for DATE` - Allows adding the entry to the food log for a given date
+
+  `DATE` must be given in ISO 8601 format, ex: `2019-07-21`.
   """
 
   use MealTracker.Command
