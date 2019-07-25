@@ -5,6 +5,8 @@ defmodule MealTracker.Commands.List do
   ```
   track list
   ```
+
+  Displays from oldest to newest by default.
   """
 
   use MealTracker.Command
@@ -15,13 +17,11 @@ defmodule MealTracker.Commands.List do
 
   @doc false
   def run(_options) do
-    files =
-      Config.root()
-      |> File.ls!()
-      |> Enum.map(fn file_name -> String.slice(file_name, 0..-4) end)
-      |> Enum.reverse()
-      |> Enum.join("\n")
-
-    IO.puts(files)
+    Config.root()
+    |> File.ls!()
+    |> Enum.map(fn file_name -> String.slice(file_name, 0..-4) end)
+    |> Enum.sort()
+    |> Enum.join("\n")
+    |> IO.puts()
   end
 end
