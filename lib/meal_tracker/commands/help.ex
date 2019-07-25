@@ -31,13 +31,18 @@ defmodule MealTracker.Commands.Help do
   end
 
   defp do_run([]) do
-    IO.puts("""
-    #{MealTracker.version_text()}
+    IO.ANSI.Docs.print_heading(MealTracker.version_text(), [])
 
-    These are the Meal Tracker commands:
+    IO.ANSI.Docs.print(
+      """
+      These are the Meal Tracker commands:
 
-    #{command_table()}
-    """)
+      #{command_table()}
+
+      Use `track help COMMAND` for more help on the given command.
+      """,
+      []
+    )
   end
 
   defp command_list do
@@ -58,7 +63,7 @@ defmodule MealTracker.Commands.Help do
       |> Enum.max()
 
     list
-    |> Enum.map(fn {name, doc} -> String.pad_trailing(name, longest + 2) <> doc end)
+    |> Enum.map(fn {name, doc} -> "* " <> String.pad_trailing(name, longest + 2) <> doc end)
     |> Enum.join("\n")
   end
 end
