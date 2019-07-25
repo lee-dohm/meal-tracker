@@ -45,7 +45,8 @@ defmodule MealTracker.MixProject do
   defp escript do
     [
       main_module: MealTracker.CLI,
-      name: "track"
+      name: "track",
+      strip_beam: false
     ]
   end
 
