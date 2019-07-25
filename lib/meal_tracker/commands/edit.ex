@@ -17,6 +17,8 @@ defmodule MealTracker.Commands.Edit do
 
   use MealTracker.Command
 
+  @shortdoc "Opens meal log in editor"
+
   def run(args) do
     args
     |> parse_args()
