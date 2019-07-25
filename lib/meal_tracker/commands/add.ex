@@ -1,6 +1,6 @@
 defmodule MealTracker.Commands.Add do
   @moduledoc """
-  Adds an entry to a daily food log.
+  Add an entry to a daily food log.
 
   ```
   track add [options] ENTRY
@@ -13,10 +13,11 @@ defmodule MealTracker.Commands.Add do
   * `--for DATE` - Allows adding the entry to the food log for a given date
   """
 
+  use MealTracker.Command
+
   alias MealTracker.{FoodItem, Log}
 
-  import MealTracker.DateUtils
-  import MealTracker.PathUtils
+  @shortdoc "Adds an entry to the daily food log"
 
   @doc false
   def run(args) do
