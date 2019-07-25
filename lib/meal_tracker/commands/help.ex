@@ -55,6 +55,7 @@ defmodule MealTracker.Commands.Help do
     list =
       command_list()
       |> Enum.reject(fn {_, doc} -> is_nil(doc) end)
+      |> Enum.sort(fn {a, _}, {b, _} -> a < b end)
 
     longest =
       list
