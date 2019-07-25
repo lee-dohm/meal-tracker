@@ -1,12 +1,17 @@
 defmodule MealTracker.Commands.Status do
   @moduledoc """
-  Handles the `track status` command.
+  Displays the current day's meal log.
+
+  ```
+  track status
+  ```
   """
 
   use MealTracker.Command
 
   @shortdoc "Display the daily meal log"
 
+  @doc false
   def run(_options) do
     text =
       today()

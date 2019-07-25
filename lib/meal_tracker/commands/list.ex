@@ -1,6 +1,10 @@
 defmodule MealTracker.Commands.List do
   @moduledoc """
-  Handles the `track list` command.
+  Displays the list of meal logs.
+
+  ```
+  track list
+  ```
   """
 
   use MealTracker.Command
@@ -9,9 +13,7 @@ defmodule MealTracker.Commands.List do
 
   @shortdoc "List the daily meal logs"
 
-  @doc """
-  Executes the command.
-  """
+  @doc false
   def run(_options) do
     files =
       Config.root()
