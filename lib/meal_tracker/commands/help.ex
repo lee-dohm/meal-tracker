@@ -14,7 +14,23 @@ defmodule MealTracker.Commands.Help do
   @shortdoc "Prints help information for commands"
 
   @doc false
-  def run(_options) do
+  def run(options) do
+    Command.load_all()
+
+    do_run(options)
+  end
+
+  defp do_run([command]) do
+    doc =
+      command
+      |> Command.command_to_module()
+      |> Command.moduledoc()
+
+    IO.ANSI.Docs.print_heading("track #{command}", [])
+    IO.ANSI.Docs.print(doc, [])
+  end
+
+  defp do_run([]) do
     IO.puts("""
     #{MealTracker.version_text()}
 
@@ -25,8 +41,6 @@ defmodule MealTracker.Commands.Help do
   end
 
   defp command_list do
-    Command.load_all()
-
     for module <- Command.all_modules(),
         row = {Command.module_name_to_command(module), Command.shortdoc(module)},
         do: row

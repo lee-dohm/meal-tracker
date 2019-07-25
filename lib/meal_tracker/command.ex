@@ -56,6 +56,16 @@ defmodule MealTracker.Command do
     Code.ensure_loaded?(module) and function_exported?(module, :run, 1)
   end
 
+  def command_to_module(command) do
+    MealTracker.Commands
+    |> Module.concat(command_to_module_name(command))
+    |> Code.ensure_loaded()
+    |> case do
+      {:module, module} -> module
+      _ -> nil
+    end
+  end
+
   @doc """
   Converts a command name to the matching module name.
   """
@@ -76,6 +86,17 @@ defmodule MealTracker.Command do
       String.starts_with?(Atom.to_string(mod), "Elixir.MealTracker.Commands")
     end)
     |> Enum.each(&ensure_command?/1)
+  end
+
+  @doc """
+  Retrieves the contents of the `moduledoc` attribute from the given `module`.
+  """
+  def moduledoc(module) when is_atom(module) do
+    case Code.fetch_docs(module) do
+      {:docs_v1, _, _, _, %{"en" => moduledoc}, _, _} -> moduledoc
+      {:docs_v1, _, _, _, :hidden, _, _} -> false
+      _ -> nil
+    end
   end
 
   @doc """
