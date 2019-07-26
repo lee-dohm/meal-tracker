@@ -3,7 +3,8 @@ defmodule MealTracker.CLI do
   Handles the command-line interface of the meal tracker application.
   """
 
-  alias MealTracker.Commands.{Add, Edit, Help, List, Status, Version}
+  alias MealTracker.Command
+  alias MealTracker.Commands.Help
 
   def main(argv \\ []) do
     case argv do
@@ -12,16 +13,25 @@ defmodule MealTracker.CLI do
     end
   end
 
-  defp handle_command("add", options), do: Add.run(options)
-  defp handle_command("edit", options), do: Edit.run(options)
-  defp handle_command("help", options), do: Help.run(options)
-  defp handle_command("list", options), do: List.run(options)
-  defp handle_command("status", options), do: Status.run(options)
-  defp handle_command("version", options), do: Version.run(options)
+  defp handle_command(command, options) do
+    case get_commands()[command] do
+      nil ->
+        IO.puts("Unknown command: #{command}\n\n")
 
-  defp handle_command(command, _options) do
-    IO.puts("Unknown command: #{command}\n\n")
+        Help.run([])
 
-    Help.run([])
+        exit({:shutdown, 1})
+
+      mod ->
+        apply(mod, :run, [options])
+    end
+  end
+
+  defp get_commands do
+    Command.load_all()
+
+    Enum.reduce(Command.all_modules(), %{}, fn mod, acc ->
+      Map.put(acc, Command.module_name_to_command(mod), mod)
+    end)
   end
 end
